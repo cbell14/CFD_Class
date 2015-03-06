@@ -23,7 +23,7 @@ def SOR(A,b,omega,max_iter,sigma):
     L = np.tril(A,-1)
     U = np.triu(A,1)
     D = np.diag(A)
-    temp = inv(L + np.diagflat(D))
+    temp = np.linalg.inv(L + np.diagflat(D))
     q = np.dot(temp,b)
     k = 0
     error = 100.0

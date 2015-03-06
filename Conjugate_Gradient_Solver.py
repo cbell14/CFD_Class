@@ -34,7 +34,7 @@ def Conj_Grad(A,b,max_iter):
             beta = rtr / rtrold
             d = r + beta * d
             
-            error = sqrt(rtr)/np.linalg.norm(b, ord=2)
+            error = np.sqrt(rtr)/np.linalg.norm(b, ord=2)
             k +=k
 
     return x
