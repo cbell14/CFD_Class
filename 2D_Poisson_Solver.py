@@ -14,10 +14,10 @@ def 2DPoisson_Solver(x_s,x_e,y_s,y_e,N_x,N_y):
 	"""
 
 #Grid Building
-x_s, y_s = 0, 0 #starting points of x and y
-x_e, y_e = 1.0, 1.0 #ending points of x and y
+#x_s, y_s = 0, 0 #starting points of x and y
+#x_e, y_e = 1.0, 1.0 #ending points of x and y
 L_x, L_y = x_e - x_s, y_e - y_s #length of domain
-N_x, N_y = 5, 5 #number of points
+#N_x, N_y = 5, 5 #number of points
 N_GC = 1 #thickness of ghost cell boundary
 
 N_fx = N_x + 1 #number of face cells in x
@@ -88,3 +88,54 @@ for j in range(0,N_cy):
         b_yd[j,i] = -step * (2.0*dy[i]) / (dy[i+1]*dy[i])
         c_yd[j,i] = step/dy[i+1]
 
+#Build total grid
+A = np.zeros((N_cx*N_cy,N_cx*N_cy),dtype=float)
+for j in range(0,N_cy-1):
+    for i in range(0,N_cx-1):
+        ii = N_cx*(j-1) + i
+        
+        ai = a_xd[j,i]
+        bi = b_xd[j,i] + b_yd[j,i]
+        ci = c_xd[j,i]
+        di = a_yd[j,i]
+        ei = c_yd[j,i]
+        
+        # X BCs
+        bim1, bip1 = 0, 0
+        if i == 0:
+            bim1 = a_xd[j,i]
+            ai = 0
+        elif i == N_cx-1:
+            bip1 = c_xd[j,i]
+            ci = 0
+        
+        # Y BCs
+        bim2, bip2 = 0, 0
+        if j == 0:
+            bim2 = a_yd[j,i]
+            di = 0
+        elif j == N_cy-1:
+            bip2 = c_yd[j,i]
+            ei = 0
+            
+        iic = ii + 1
+        iia = ii - 1
+        iie = ii + N_cx
+        iid = ii - N_cx
+        
+        #coefficients
+        A[ii,ii] = bi + bim1 + bip1 + bim2 + bip2 + (N_x*N_y)
+        
+        if iia >= 0:
+            A[iia,ii] = ai
+        
+        if iic < N_cx*N_cy:
+            A[iic,ii] = ci
+        
+        if iid >= 0:
+            A[iid,ii] = di
+        
+        if iie < N_cx*N_cy:
+            A[iie,ii] = ei
+
+#iic and iie are giving me issues
