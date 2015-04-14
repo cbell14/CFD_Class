@@ -20,9 +20,9 @@ def Conj_Grad(A,b,max_iter):
     k = 0
     error = 100
     
-    while abs(error) > 1e-6:
+    while abs(error) > 1e-4:
         if  k > max_iter:
-            print("Maximum number of iterations reached")
+            print("Maximum number of iterations reached for Conjugate Gradient")
             break
         else:
             Ad = np.dot(A,d)
@@ -33,8 +33,10 @@ def Conj_Grad(A,b,max_iter):
             rtr = np.dot(r.T,r)
             beta = rtr / rtrold
             d = r + beta * d
-            
+
             error = np.sqrt(rtr)/np.linalg.norm(b, ord=2)
             k +=k
 
-    return x
+    bnorm = np.linalg.norm(b,ord=2)
+    total_error = np.linalg.norm(r,ord=2) / bnorm
+    return x, total_error
