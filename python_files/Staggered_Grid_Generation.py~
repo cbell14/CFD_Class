@@ -1,5 +1,3 @@
-import numpy
-
 def Generate_Grid(Lx, Ly, Nx, Ny, x_s, y_s):
     """Generates a 2D staggered Grid
     
@@ -22,6 +20,8 @@ def Generate_Grid(Lx, Ly, Nx, Ny, x_s, y_s):
     v_exact    2D array of float, array for exact v
     vt         2D array of float, array for time varying v
     """
+    
+    import numpy
     
     dx = Lx/(Nx)
     dy = Ly/(Ny)

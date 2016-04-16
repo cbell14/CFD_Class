@@ -1,6 +1,5 @@
 from matplotlib import pyplot as plt
 import numpy as np
-import math
 
 def Pressure_Plotting(p, xp, yp, Nx, nt):
     p_min = np.min(p)

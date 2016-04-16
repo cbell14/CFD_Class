@@ -27,8 +27,8 @@ def Build_G1(u, v, dx, dy, nu):
             (u[:-2,1:-1] + u[1:-1, 1:-1])*(v[1:-2,:-1]+v[1:-2,1:])) / dy
       
     return Gu
-    
-def Build_G2(u, v, dx, dy, nu):
+
+    def Build_G2(u, v, dx, dy, nu):
     """
     Calculates the G2 term for time marching NS Solver
     
@@ -43,7 +43,8 @@ def Build_G2(u, v, dx, dy, nu):
     Gv       2D array of float, G in y direction
     
     """
-    Gv = np.zeros_like(v, dtype=float)
+    #test
+        Gv = np.zeros_like(v, dtype=float)
 
     Gv[1:-1, 1:-1] = \
     (v[1:-1,2:] - 2 * v[1:-1, 1:-1] + v[1:-1,:-2]) / dx**2 \

@@ -1,8 +1,3 @@
-import numpy
-import scipy
-from scipy import sparse
-from scipy.sparse import linalg
-
 def RK3(u, v, Nx, Ny, dx, dy, nu, nt):
     for t in range(0,nt):
         un = np.empty_like(u)
